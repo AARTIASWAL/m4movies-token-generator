@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="button"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="button"]:hover {
+            background-color: #45a049;
+        }
+
+        #demo {
+            margin-top: 20px;
+            font-size: 14px;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Token Generator</h2>
+
+    <form>
+        <label for="path">Path:</label><br>
+        <input type="text" id="path" name="path"><br><br>
+        <input type="button" value="Generate Token" onclick="generateToken()">
+    </form>
+    <p id="demo"></p>
+</div>
+
+<script>
+function JSONToBase64(jsonObj) {
+    const jsonString = JSON.stringify(jsonObj);
+    const base64String = btoa(jsonString);
+    return base64String;
+}
+
+function getFileName(path) {
+    const a = path.split('/')
+    return a[a.length - 1]
+}
+
+function generateToken() {
+    const path = document.getElementById("path").value;
+    const t = Date.now();
+    const token = { time: t, path: path };
+    const filename = getFileName(path)
+    const tokenBase64 = JSONToBase64(token);
+    document.getElementById("demo").innerHTML = `/${tokenBase64}/${filename}`;
+}
+</script>
+
+</body>
+</html>
